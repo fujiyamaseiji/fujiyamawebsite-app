@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUJIYAMA WEBDESIGN SERVICE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@300;400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --blue: #1a4f8a;
+        --blue-dark: #0e2d52;
+        --white: #f0eeea;
+        --logo-green: #d4e89a;
+        --logo-brown: #5c3a1e;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--blue);
+        color: var(--white);
+        font-family: 'Noto Serif JP', serif;
+        font-weight: 300;
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        opacity: 0.5;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: var(--blue);
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+
+      .hero-bg svg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        opacity: 0.38;
+      }
+
+      .hero-topbar {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 5vw, 4rem);
+      }
+
+      .hero-name-en {
+        font-family: serif;
+        font-weight: 900;
+        font-size: clamp(3rem, 10vw, 8.5rem);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        color: var(--white);
+        display: block;
+        animation: fadeIn 0.6s ease both;
+        text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-sub-title {
+        font-family: serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: clamp(1.5rem, 5vw, 3.8rem);
+        line-height: 1;
+        color: var(--white);
+        display: block;
+        margin-top: 0.15em;
+        animation: fadeIn 0.6s 0.1s ease both;
+        text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-date {
+        text-align: right;
+        padding-top: 0.5rem;
+        animation: fadeIn 0.6s 0.2s ease both;
+      }
+
+      .hero-date p {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(0.75rem, 1.5vw, 1rem);
+        line-height: 1.7;
+        color: rgba(240, 238, 234, 0.85);
+        white-space: nowrap;
+      }
+
+      /* ── FACE / LOGO CIRCLE ── */
+      .face-container {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        padding: 0 2rem 0;
+        margin-top: -1rem;
+      }
+
+      .face-circle-wrap {
+        position: relative;
+        width: clamp(240px, 58vw, 500px);
+        aspect-ratio: 1;
+      }
+
+      .logo-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        box-shadow:
+          0 0 0 2px rgba(212, 232, 154, 0.25),
+          0 12px 70px rgba(0, 0, 0, 0.55),
+          0 0 80px rgba(212, 232, 154, 0.08);
+      }
+
+      .logo-circle svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .curved-text-svg {
+        position: absolute;
+        inset: -22%;
+        width: 144%;
+        height: 144%;
+        pointer-events: none;
+      }
+
+      /* ── SCROLL INDICATOR ── */
+      .scroll-indicator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.55rem;
+        margin-top: 1.4rem;
+        margin-bottom: 0.5rem;
+        animation: fadeIn 1s 0.8s ease both;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 10;
+        position: relative;
+      }
+
+      .scroll-indicator-oval {
+        animation: bounceDown 1.8s ease-in-out infinite;
+        display: block;
+      }
+
+      .scroll-indicator-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.3em;
+        color: rgba(240, 238, 234, 0.5);
+        text-transform: uppercase;
+      }
+
+      /* ── BOTTOM BAR ── */
+      .hero-bottombar {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 1rem clamp(1.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2.5rem);
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .ai-badge-hero {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.5em 1.2em;
+        border: 1px solid rgba(240, 238, 234, 0.4);
+        font-family: 'Space Mono', monospace;
+        font-size: clamp(0.52rem, 1.2vw, 0.68rem);
+        letter-spacing: 0.12em;
+        color: rgba(240, 238, 234, 0.88);
+        animation: fadeIn 0.8s 0.5s ease both;
+        opacity: 0;
+      }
+
+      .ai-badge-hero .dot {
+        color: var(--logo-green);
+        animation: pulse 2s infinite;
+      }
+
+      .hero-address {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+        color: rgba(240, 238, 234, 0.65);
+        line-height: 1.6;
+        text-align: right;
+      }
+
+      /* ── MAIN ── */
+      main {
+        background: var(--blue);
+        position: relative;
+      }
+
+      .section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hr-white {
+        border: none;
+        border-top: 1px solid rgba(240, 238, 234, 0.18);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .section-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        color: rgba(240, 238, 234, 0.45);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+      }
+
+      .section-label::before {
+        content: '—';
+        color: rgba(240, 238, 234, 0.35);
+      }
+
+      .section-title {
+        font-family: serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        line-height: 1.05;
+        color: var(--white);
+        margin-bottom: 2rem;
+      }
+
+      .section-title em {
+        font-style: italic;
+        color: rgba(212, 232, 154, 0.9);
+      }
+
+      .intro-text {
+        font-size: clamp(0.88rem, 1.8vw, 1rem);
+        line-height: 2.1;
+        color: rgba(240, 238, 234, 0.82);
+        max-width: 680px;
+      }
+
+      .intro-text strong {
+        color: var(--white);
+        font-weight: 400;
+      }
+
+      .tagline-block {
+        border-left: 3px solid rgba(212, 232, 154, 0.4);
+        padding: 2rem 2.5rem;
+        background: rgba(212, 232, 154, 0.04);
+        max-width: 800px;
+      }
+
+      .tagline-text {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: clamp(1.1rem, 3vw, 1.6rem);
+        font-weight: 400;
+        line-height: 1.7;
+        color: rgba(240, 238, 234, 0.95);
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        gap: 1px;
+        background: rgba(240, 238, 234, 0.1);
+        border: 1px solid rgba(240, 238, 234, 0.1);
+      }
+
+      .card {
+        background: rgba(14, 45, 82, 0.7);
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.3s ease;
+      }
+
+      .card:hover {
+        background: rgba(30, 70, 120, 0.85);
+      }
+
+      .card::before {
+        content: attr(data-num);
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        font-weight: 900;
+        color: rgba(240, 238, 234, 0.055);
+        line-height: 1;
+        transition: color 0.3s;
+      }
+
+      .card:hover::before {
+        color: rgba(212, 232, 154, 0.1);
+      }
+
+      .card-icon {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.08rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+        color: var(--white);
+      }
+
+      .card-desc {
+        font-size: 0.8rem;
+        line-height: 1.9;
+        color: rgba(240, 238, 234, 0.62);
+      }
+
+      .card-tag {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.2em 0.6em;
+        border: 1px solid rgba(212, 232, 154, 0.25);
+        color: rgba(212, 232, 154, 0.55);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.15em;
+      }
+
+      .skills-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+
+      @media (max-width: 600px) {
+        .skills-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .skill-group-title {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.25em;
+        color: rgba(212, 232, 154, 0.8);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(240, 238, 234, 0.15);
+      }
+
+      .skill-item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(240, 238, 234, 0.07);
+        font-size: 0.85rem;
+        color: rgba(240, 238, 234, 0.72);
+      }
+
+      .skill-item::before {
+        content: '›';
+        color: rgba(212, 232, 154, 0.65);
+        font-family: 'Space Mono', monospace;
+        flex-shrink: 0;
+      }
+
+      .cta-block {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 2rem;
+        padding: 3rem;
+        border: 1px solid rgba(240, 238, 234, 0.18);
+        background: rgba(255, 255, 255, 0.04);
+        position: relative;
+        overflow: hidden;
+      }
+
+      @media (max-width: 600px) {
+        .cta-block {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .cta-block::before {
+        content: '';
+        position: absolute;
+        right: -100px;
+        top: -100px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(212, 232, 154, 0.06), transparent 70%);
+      }
+
+      .cta-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        color: rgba(240, 238, 234, 0.45);
+        margin-bottom: 0.75rem;
+      }
+
+      .cta-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.4rem, 4vw, 2.3rem);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--white);
+      }
+
+      .cta-btn {
+        display: inline-block;
+        padding: 1em 2.2em;
+        border: 1px solid rgba(240, 238, 234, 0.55);
+        color: var(--white);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.3s, color 0.3s;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-btn:hover {
+        background: var(--white);
+        color: var(--blue-dark);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        padding: 2rem clamp(1.5rem, 5vw, 4rem);
+        border-top: 1px solid rgba(240, 238, 234, 0.14);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+      }
+
+      .footer-copy,
+      .footer-loc {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.58rem;
+        color: rgba(240, 238, 234, 0.35);
+        letter-spacing: 0.1em;
+      }
+
+      .footer-app-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.55rem 1rem 0.55rem 0.55rem;
+        border: 1px solid rgba(240, 238, 234, 0.18);
+        border-radius: 12px;
+        text-decoration: none;
+        transition: border-color 0.25s, background 0.25s;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .footer-app-link:hover {
+        border-color: rgba(212, 232, 154, 0.4);
+        background: rgba(212, 232, 154, 0.06);
+      }
+
+      .footer-app-icon {
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+      }
+
+      .footer-app-icon svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 9px;
+      }
+
+      .footer-app-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+
+      .footer-app-name {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.65rem;
+        color: rgba(240, 238, 234, 0.9);
+        letter-spacing: 0.06em;
+        font-weight: 700;
+      }
+
+      .footer-app-sub {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.52rem;
+        color: rgba(240, 238, 234, 0.4);
+        letter-spacing: 0.08em;
+      }
+
+      .footer-app-arrow {
+        flex-shrink: 0;
+        margin-left: 0.2rem;
+      }
+
+      /* ── BACK TO TOP BUTTON ── */
+      .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 9000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.45rem;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        pointer-events: none;
+        text-decoration: none;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .back-to-top-oval {
+        animation: bounceUp 1.8s ease-in-out infinite;
+        transition: opacity 0.25s;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+      }
+
+      .back-to-top:hover .back-to-top-oval {
+        opacity: 0.75;
+      }
+
+      .back-to-top-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.52rem;
+        letter-spacing: 0.25em;
+        color: rgba(240, 238, 234, 0.45);
+        text-transform: uppercase;
+      }
+
+      /* ── ANIMATIONS ── */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+
+        0%,
+        100% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0.35;
+        }
+      }
+
+      @keyframes rotateCW {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rotateCCW {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      @keyframes bounceDown {
+
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(7px);
+        }
+      }
+
+      @keyframes bounceUp {
+
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero" id="top">
+      <!-- Background swirls -->
+      <div class="hero-bg">
+        <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="b2">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+            <filter id="b1">
+              <feGaussianBlur stdDeviation="3" />
+            </filter>
+            <radialGradient id="vig" cx="50%" cy="50%" r="70%">
+              <stop offset="0%" stop-color="transparent" />
+              <stop offset="100%" stop-color="rgba(8,24,52,0.45)" />
+            </radialGradient>
+          </defs>
+          <ellipse cx="140" cy="110" rx="230" ry="95" fill="rgba(90,155,230,0.22)" filter="url(#b2)" transform="rotate(-22,140,110)" />
+          <ellipse cx="1060" cy="175" rx="210" ry="82" fill="rgba(70,135,215,0.18)" filter="url(#b2)" transform="rotate(14,1060,175)" />
+          <ellipse cx="600" cy="660" rx="360" ry="125" fill="rgba(55,105,180,0.18)" filter="url(#b2)" />
+          <ellipse cx="190" cy="510" rx="185" ry="72" fill="rgba(90,155,230,0.13)" filter="url(#b1)" transform="rotate(10,190,510)" />
+          <ellipse cx="960" cy="585" rx="205" ry="78" fill="rgba(70,135,215,0.13)" filter="url(#b1)" transform="rotate(-9,960,585)" />
+          <path d="M0,195 Q300,175 600,205 Q900,235 1200,195" stroke="rgba(150,195,245,0.13)" stroke-width="1.5" fill="none" />
+          <path d="M0,245 Q300,225 600,255 Q900,285 1200,245" stroke="rgba(150,195,245,0.08)" stroke-width="1" fill="none" />
+          <path d="M0,575 Q400,555 700,585 Q955,618 1200,575" stroke="rgba(150,195,245,0.10)" stroke-width="1.5" fill="none" />
+          <path d="M0,625 Q400,605 700,635 Q955,668 1200,625" stroke="rgba(150,195,245,0.06)" stroke-width="1" fill="none" />
+          <rect width="1200" height="800" fill="url(#vig)" />
+        </svg>
+      </div>
+      <!-- Topbar -->
+      <div class="hero-topbar">
+        <!-- <div>
+          <span class="hero-name-en">FUJIYAMA</span>
+          <span class="hero-sub-title">Web Design</span>
+        </div> -->
+        <div class="hero-date">
+          <p>AI × Web制作</p>
+        </div>
+      </div>
+      <!-- Central Logo Circle -->
+      <div class="face-container">
+        <div class="face-circle-wrap">
+          <!-- Rotating arc text -->
+          <svg class="curved-text-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="arcTop" d="M250,250 m-195,0 a195,195 0 1,1 390,0" />
+              <path id="arcBot" d="M250,250 m-195,0 a195,195 0 0,0 390,0" />
+            </defs>
+            <g style="transform-origin:250px 250px; animation: rotateCW 28s linear infinite">
+              <text font-family="'Playfair Display',serif" font-size="26" font-weight="700" font-style="italic" fill="white" letter-spacing="7" opacity="0.92">
+                <textPath href="#arcTop" startOffset="4%">FUJIYAMA WEBDESIGN SERVICE</textPath>
+              </text>
+            </g>
+            <g style="transform-origin:250px 250px; animation: rotateCCW 28s linear infinite">
+              <text font-family="'Playfair Display',serif" font-size="22" font-weight="700" font-style="italic" fill="white" letter-spacing="5" opacity="0.85">
+                <textPath href="#arcBot" startOffset="3%">FUJIYAMA WEBDESIGN SERVICE</textPath>
+              </text>
+            </g>
+          </svg>
+          <!-- LOGO CIRCLE -->
+          <div class="logo-circle">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+                  <stop offset="0%" stop-color="#dff0a0" />
+                  <stop offset="50%" stop-color="#cce080" />
+                  <stop offset="100%" stop-color="#b8cc60" />
+                </radialGradient>
+                <radialGradient id="sheen" cx="38%" cy="32%" r="45%">
+                  <stop offset="0%" stop-color="rgba(255,255,255,0.28)" />
+                  <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                </radialGradient>
+                <radialGradient id="vign2" cx="50%" cy="50%" r="50%">
+                  <stop offset="60%" stop-color="rgba(0,0,0,0)" />
+                  <stop offset="100%" stop-color="rgba(30,60,10,0.35)" />
+                </radialGradient>
+              </defs>
+              <circle cx="250" cy="250" r="248" fill="url(#bgGrad)" />
+              <circle cx="250" cy="250" r="248" fill="url(#sheen)" />
+              <circle cx="250" cy="250" r="248" fill="url(#vign2)" />
+              <circle cx="250" cy="250" r="246" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" />
+              <circle cx="250" cy="250" r="240" fill="none" stroke="rgba(80,140,20,0.25)" stroke-width="1" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- ↓ SCROLL INDICATOR — 同心楕円 + 下矢印 -->
+      <div class="scroll-indicator" onclick="document.querySelector('main').scrollIntoView({behavior:'smooth'})">
+        <!-- 同心楕円SVG（画像の再現）+ 中央に下矢印 -->
+        <svg class="scroll-indicator-oval" width="90" height="72" viewBox="0 0 90 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 同心楕円 5層 -->
+          <ellipse cx="45" cy="36" rx="44" ry="35" stroke="rgba(240,238,234,0.45)" stroke-width="1.2" />
+          <ellipse cx="45" cy="36" rx="34" ry="26.5" stroke="rgba(240,238,234,0.45)" stroke-width="1.1" />
+          <ellipse cx="45" cy="36" rx="24" ry="18.5" stroke="rgba(240,238,234,0.45)" stroke-width="1.1" />
+          <ellipse cx="45" cy="36" rx="14.5" ry="11" stroke="rgba(240,238,234,0.45)" stroke-width="1.1" />
+          <ellipse cx="45" cy="36" rx="6" ry="4.5" stroke="rgba(240,238,234,0.5)" stroke-width="1.2" />
+          <!-- 中心点 -->
+          <ellipse cx="45" cy="36" rx="2" ry="1.5" fill="rgba(240,238,234,0.55)" />
+          <!-- 下矢印（楕円の下に配置） -->
+          <path d="M38 61 L45 69 L52 61" stroke="rgba(240,238,234,0.7)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <line x1="45" y1="50" x2="45" y2="68" stroke="rgba(240,238,234,0.4)" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        <span class="scroll-indicator-label">Scroll</span>
+      </div>
+      <!-- Bottombar -->
+      <div class="hero-bottombar">
+        <div class="ai-badge-hero"><span class="dot">◆</span>AI を活用したWeb制作サポート</div>
+        <div class="hero-address">
+          <p>東京都</p>
+          <p>FUJIYAMA WEBDESIGN SERVICE</p>
+        </div>
+      </div>
+    </section>
+    <!-- ── MAIN ── -->
+    <main>
+      <hr class="hr-white">
+      <section class="section">
+        <p class="section-label">About</p>
+        <h2 class="section-title">FUJIYAMA WEBDESIGN SERVICE</h2>
+        <p class="intro-text"> Webサイト制作・フロントエンド開発・UI/UX改善を中心に、制作から運用・機能改修まで幅広く対応しております。ECサイト・ファッション系・会員管理画面・キャンペーンページなど、多様な現場での実装経験をもとに、ユーザー視点と保守性を意識した提案・実装を行ってきました。<br><br>
+          <strong>AI</strong> を実務に取り入れることで、制作スピード・品質・提案力をさらに高めた次世代のWeb制作サービスをご提供します。
+        </p>
+      </section>
+      <hr class="hr-white">
+      <section class="section">
+        <div class="tagline-block">
+          <p class="tagline-text">現場経験とAIの力を掛け合わせることで、<br>より速く、より精度高く、より深い提案を。</p>
+        </div>
+      </section>
+      <hr class="hr-white">
+      <section class="section">
+        <h2 class="section-title">AIで進化した、<br><em>7つのサポート</em></h2>
+        <div class="cards-grid">
+          <div class="card" data-num="01">
+            <div class="card-icon">🔍</div>
+            <h3 class="card-title">既存サイトの課題分析 × AI診断</h3>
+            <p class="card-desc">表示崩れ・パフォーマンス低下・UI問題をAIと連携して多角的に分析。精度の高い改善提案を素早くご提供します。</p><span class="card-tag">SITE AUDIT</span>
+          </div>
+          <div class="card" data-num="02">
+            <div class="card-icon">✍️</div>
+            <h3 class="card-title">コーディング速度・品質の向上</h3>
+            <p class="card-desc">AIペアプログラミングで効率化。デザイン再現性を保ちながら、保守性の高いコードを従来より短い納期でお届けします。</p><span class="card-tag">CODING</span>
+          </div>
+          <div class="card" data-num="03">
+            <div class="card-icon">📝</div>
+            <h3 class="card-title">ライティング・コンテンツ制作の支援</h3>
+            <p class="card-desc">SEOを意識したWebコンテンツをAI活用で高品質・短期間に作成。キャンペーンコピーからメタ情報まで対応します。</p><span class="card-tag">CONTENT</span>
+          </div>
+          <div class="card" data-num="04">
+            <div class="card-icon">💡</div>
+            <h3 class="card-title">UI/UX改善提案の深化</h3>
+            <p class="card-desc">ユーザーフローの課題抽出・改善案の壁打ちをAIと共に行い、論理的根拠のある提案をドキュメント化します。</p><span class="card-tag">UX</span>
+          </div>
+          <div class="card" data-num="05">
+            <div class="card-icon">📱</div>
+            <h3 class="card-title">WebViewアプリ化 × AI要件整理</h3>
+            <p class="card-desc">既存WebサイトのWebView技術によるスマホアプリ化に加え、要件定義もAI支援で効率化。Web資産を素早くアプリ展開します。</p><span class="card-tag">APP</span>
+          </div>
+          <div class="card" data-num="06">
+            <div class="card-icon">🔧</div>
+            <h3 class="card-title">運用効率化・自動化の提案</h3>
+            <p class="card-desc">定型作業の自動化・運用フロー改善をAIの視点も交えてご提案。長期的な運用を見越した実装改善を行います。</p><span class="card-tag">AUTOMATION</span>
+          </div>
+          <div class="card" data-num="07">
+            <div class="card-icon">🤝</div>
+            <h3 class="card-title">ドキュメント・仕様書作成の高速化</h3>
+            <p class="card-desc">要件定義書・改修仕様書・作業報告書などをAIで効率化し、クライアント様の確認・承認プロセスをスムーズにします。</p><span class="card-tag">DOCS</span>
+          </div>
+        </div>
+      </section>
+      <hr class="hr-white">
+      <section class="section">
+        <p class="section-label">Expertise</p>
+        <h2 class="section-title">専門領域</h2>
+        <div class="skills-layout">
+          <div>
+            <p class="skill-group-title">Web制作・開発</p>
+            <div class="skill-item">HTML / CSS / JavaScript</div>
+            <div class="skill-item">フロントエンド実装・コーディング</div>
+            <div class="skill-item">レスポンシブ・クロスブラウザ対応</div>
+            <div class="skill-item">ECサイト・会員管理画面</div>
+            <div class="skill-item">キャンペーンページ制作</div>
+            <div class="skill-item">WebView技術によるアプリ化</div>
+          </div>
+          <div>
+            <p class="skill-group-title">AI 活用</p>
+            <div class="skill-item">AIペアプログラミング</div>
+            <div class="skill-item">コード品質レビュー・リファクタリング</div>
+            <div class="skill-item">UI/UX課題の分析・提案</div>
+            <div class="skill-item">Webコンテンツ・コピー生成</div>
+            <div class="skill-item">仕様書・ドキュメント自動化</div>
+            <div class="skill-item">運用フロー改善・自動化提案</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span class="footer-copy">© FUJIYAMA WEBDESIGN SERVICE</span>
+      <a href="https://apps.apple.com/jp/app/webviewtester/id6744392801" target="_blank" rel="noopener noreferrer" class="footer-app-link">
+        <div class="footer-app-icon">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="60" height="60" rx="13" fill="url(#appBg)" />
+            <defs>
+              <linearGradient id="appBg" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4a80d4" />
+                <stop offset="100%" stop-color="#1a4fa8" />
+              </linearGradient>
+            </defs>
+            <g transform="translate(12,8) scale(0.72)">
+              <path d="M28,6 L30,2 L32,6 A14,14 0 0,1 40,10 L44,8 L46,12 L42,14 A14,14 0 0,1 42,22 L46,24 L44,28 L40,26 A14,14 0 0,1 32,30 L32,34 L28,34 L28,30 A14,14 0 0,1 20,26 L16,28 L14,24 L18,22 A14,14 0 0,1 18,14 L14,12 L16,8 L20,10 A14,14 0 0,1 28,6Z" fill="rgba(255,255,255,0.9)" />
+              <circle cx="28" cy="18" r="6" fill="url(#appBg)" />
+            </g>
+            <g transform="translate(33,7) scale(0.48)">
+              <path d="M18,4 L20,1 L22,4 A9,9 0 0,1 28,8 L31,7 L33,10 L30,12 A9,9 0 0,1 30,18 L33,20 L31,23 L28,21 A9,9 0 0,1 22,25 L22,28 L18,28 L18,25 A9,9 0 0,1 12,21 L9,23 L7,20 L10,18 A9,9 0 0,1 10,12 L7,10 L9,7 L12,8 A9,9 0 0,1 18,4Z" fill="rgba(255,255,255,0.85)" />
+              <circle cx="18" cy="15" r="4" fill="url(#appBg)" />
+            </g>
+            <g transform="translate(8,32) scale(0.46)">
+              <path d="M18,4 L20,1 L22,4 A9,9 0 0,1 28,8 L31,7 L33,10 L30,12 A9,9 0 0,1 30,18 L33,20 L31,23 L28,21 A9,9 0 0,1 22,25 L22,28 L18,28 L18,25 A9,9 0 0,1 12,21 L9,23 L7,20 L10,18 A9,9 0 0,1 10,12 L7,10 L9,7 L12,8 A9,9 0 0,1 18,4Z" fill="rgba(255,255,255,0.75)" />
+              <circle cx="18" cy="15" r="4" fill="url(#appBg)" />
+            </g>
+            <text x="30" y="54" font-family="'Space Mono',monospace" font-size="8.5" font-weight="700" fill="white" text-anchor="middle" letter-spacing="0.3">Webview</text>
+          </svg>
+        </div>
+        <div class="footer-app-info">
+          <span class="footer-app-name">Webview Tester</span>
+          <span class="footer-app-sub">App Store で入手</span>
+        </div>
+        <svg class="footer-app-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="rgba(240,238,234,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <span class="footer-loc">&nbsp;&nbsp;&nbsp;</span>
+    </footer>
+    <!-- ↑ BACK TO TOP BUTTON -->
+    <a class="back-to-top" id="backToTop" href="#top">
+      <!-- 同心楕円 + 上矢印 -->
+      <svg class="back-to-top-oval" width="90" height="82" viewBox="0 0 90 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 上矢印（楕円の上に配置） -->
+        <line x1="45" y1="2" x2="45" y2="20" stroke="rgba(240,238,234,0.4)" stroke-width="1.2" stroke-linecap="round" />
+        <path d="M38 9 L45 1 L52 9" stroke="rgba(240,238,234,0.7)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <!-- 同心楕円 5層 -->
+        <ellipse cx="45" cy="54" rx="44" ry="27" stroke="rgba(240,238,234,0.45)" stroke-width="1.2" />
+        <ellipse cx="45" cy="54" rx="34" ry="20.5" stroke="rgba(240,238,234,0.45)" stroke-width="1.1" />
+        <ellipse cx="45" cy="54" rx="24" ry="14.5" stroke="rgba(240,238,234,0.45)" stroke-width="1.1" />
+        <ellipse cx="45" cy="54" rx="14.5" ry="8.5" stroke="rgba(240,238,234,0.45)" stroke-width="1.1" />
+        <ellipse cx="45" cy="54" rx="6" ry="3.5" stroke="rgba(240,238,234,0.5)" stroke-width="1.2" />
+        <ellipse cx="45" cy="54" rx="2" ry="1.2" fill="rgba(240,238,234,0.55)" />
+      </svg>
+      <span class="back-to-top-label">Top</span>
+    </a>
+    <script>
+      /* ════ SCROLL REVEAL ════ */
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.section').forEach(el => obs.observe(el));
+
+      /* ════ BACK TO TOP: show after scrolling past hero ════ */
+      const backToTop = document.getElementById('backToTop');
+      const hero = document.querySelector('.hero');
+
+      window.addEventListener('scroll', () => {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        if (heroBottom < 0) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }, { passive: true });
+    </script>
+  </body>
+</html>
