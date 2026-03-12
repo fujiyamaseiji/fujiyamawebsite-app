@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旧暦カレンダー 2026年1月</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Times New Roman', serif;
+      background: #f0f0f0; min-height: 100vh; padding: 24px 16px;
+    }
+    header { text-align: center; margin-bottom: 16px; }
+    header h1 { font-size: 1.8rem; color: #222; letter-spacing: 0.08em; }
+    header .nengo { font-size: 0.85rem; color: #555; margin-top: 4px; letter-spacing: 0.15em; }
+    .header-nav { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .nav-btn {
+      display: inline-block; padding: 6px 16px; background: #2a2a2a; color: #ddd;
+      text-decoration: none; font-size: 0.9rem;
+      font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+      border-radius: 4px; letter-spacing: 0.05em; transition: background 0.15s;
+    }
+    .nav-btn:hover { background: #444; }
+    .calendar { max-width: 860px; margin: 0 auto; background: #fff; border: 1px solid #ccc; }
+    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); background: #2a2a2a; }
+    .weekday {
+      text-align: center; padding: 8px 4px; color: #ddd; font-size: 0.9rem;
+      letter-spacing: 0.05em; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    }
+    .weekday.sun { color: #ff8888; }
+    .weekday.sat { color: #88aaff; }
+    .days { display: grid; grid-template-columns: repeat(7, 1fr); border-top: 1px solid #ccc; }
+    .day {
+      background: #fff; padding: 6px 8px 5px; min-height: 100px;
+      display: flex; flex-direction: column;
+      border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;
+    }
+    .day:nth-child(7n) { border-right: none; }
+    .day.empty { background: #f8f8f8; }
+    .day-header { display: flex; align-items: baseline; gap: 4px; }
+    .day-num { font-size: 1.45rem; font-weight: bold; color: #222; line-height: 1; }
+    .day.is-sunday .day-num   { color: #cc0000; }
+    .day.is-saturday .day-num { color: #0044cc; }
+    .day.is-holiday .day-num  { color: #cc0000; }
+    .day.is-today { background: #fffde8; }
+    .today-badge {
+      font-size: 0.58rem; background: #e07000; color: white;
+      padding: 1px 4px; border-radius: 3px;
+      font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; line-height: 1.4;
+    }
+    .moon-inline { font-size: 0.95rem; line-height: 1; }
+    .lunar { font-size: 0.7rem; color: #888; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; margin-top: 2px; }
+    .lunar.new-month { color: #0044bb; font-weight: bold; }
+    .holiday-name { font-size: 0.62rem; color: #cc0000; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; margin-top: 1px; }
+    .sekki { font-size: 0.62rem; color: #226622; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; margin-top: 1px; }
+    .rokuyou { font-size: 0.65rem; margin-top: auto; padding-top: 3px; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; }
+    .rokuyou.taian      { color: #cc0000; font-weight: bold; }
+    .rokuyou.butsumetsu { color: #2244aa; }
+    .rokuyou.sensho     { color: #1a7a33; }
+    .rokuyou.tomobiki   { color: #9a6000; }
+    .rokuyou.senbu      { color: #6622aa; }
+    .rokuyou.shakku     { color: #aa1166; }
+    .legend {
+      max-width: 860px; margin: 12px auto 0;
+      display: flex; flex-wrap: wrap; gap: 6px 14px;
+      font-size: 0.78rem; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; color: #444;
+    }
+    .legend-item { display: flex; align-items: center; gap: 3px; }
+    .legend-item .lbl-taian      { color: #cc0000; font-weight: bold; }
+    .legend-item .lbl-butsumetsu { color: #2244aa; }
+    .legend-item .lbl-sensho     { color: #1a7a33; }
+    .legend-item .lbl-senbu      { color: #6622aa; }
+    .legend-item .lbl-shakku     { color: #aa1166; }
+    .legend-item .lbl-tomobiki   { color: #9a6000; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-nav">
+    <span style="width:80px;"></span>
+    <h1>2026年（令和8年）1月</h1>
+    <a class="nav-btn" href="02.html">2月 ▶</a>
+  </div>
+  <div class="nengo">丙午年（ひのえうま）　旧暦 霜月・師走</div>
+</header>
+<div class="calendar">
+  <div class="weekdays">
+    <div class="weekday sun">日</div>
+    <div class="weekday">月</div>
+    <div class="weekday">火</div>
+    <div class="weekday">水</div>
+    <div class="weekday">木</div>
+    <div class="weekday">金</div>
+    <div class="weekday sat">土</div>
+  </div>
+  <div class="days" id="days"></div>
+</div>
+<div class="legend">
+  <div class="legend-item"><span class="lbl-taian">大安</span>最も吉</div>
+  <div class="legend-item"><span class="lbl-tomobiki">友引</span>友を引く</div>
+  <div class="legend-item"><span class="lbl-sensho">先勝</span>午前吉</div>
+  <div class="legend-item"><span class="lbl-senbu">先負</span>午後吉</div>
+  <div class="legend-item"><span class="lbl-shakku">赤口</span>凶日</div>
+  <div class="legend-item"><span class="lbl-butsumetsu">仏滅</span>最も凶</div>
+  <div class="legend-item">🌑新月&nbsp; 🌓上弦&nbsp; 🌕満月&nbsp; 🌗下弦</div>
+</div>
+<script>
+  // ─── 旧暦データ（2026年1月） ────────────────────────────
+  // 旧暦11月1日 = 2025/12/20  旧暦11月は29日間
+  // 旧暦12月1日 = 2026/1/18  旧暦12月は30日間
+  // 旧暦1月1日  = 2026/2/17
+  // 1/1=旧暦11/13, 1/17=旧暦11/29, 1/18=旧暦12/1, 1/31=旧暦12/14
+  function getLunar(day) {
+    if (day <= 17) return { month: 11, day: day + 12 };
+    else           return { month: 12, day: day - 17 };
+  }
+  const ROKUYOU     = ['大安','赤口','先勝','友引','先負','仏滅'];
+  const ROKUYOU_CLS = ['taian','shakku','sensho','tomobiki','senbu','butsumetsu'];
+  function getRokuyou(lm, ld) { return { name: ROKUYOU[(lm+ld)%6], cls: ROKUYOU_CLS[(lm+ld)%6] }; }
+  // 旧暦11/15=1/3(満月), 旧暦11/22=1/10(下弦), 旧暦12/1=1/18(新月), 旧暦12/8=1/25(上弦)
+  const MOON = { 3: '🌕', 10: '🌗', 18: '🌑', 25: '🌓' };
+  // 元日=1/1, 成人の日=第2月曜=1/12
+  const HOLIDAYS = { 1: '元日', 12: '成人の日' };
+  const SEKKI = { 6: '小寒', 20: '大寒' };
+  const today = new Date();
+  const todayDay = (today.getFullYear() === 2026 && today.getMonth() === 0) ? today.getDate() : -1;
+  // 2026/1/1 = 木曜（startDow=4）
+  const START_DOW = 4;
+  const container = document.getElementById('days');
+  for (let i = 0; i < START_DOW; i++)
+    container.insertAdjacentHTML('beforeend', '<div class="day empty"></div>');
+  for (let day = 1; day <= 31; day++) {
+    const dow = (START_DOW + day - 1) % 7;
+    const lunar = getLunar(day);
+    const ry = getRokuyou(lunar.month, lunar.day);
+    const moon = MOON[day] || '';
+    const holiday = HOLIDAYS[day] || '';
+    const sekki = SEKKI[day] || '';
+    const isToday = day === todayDay;
+    const cls = ['day', dow===0||holiday?'is-sunday':'', dow===6?'is-saturday':'', holiday?'is-holiday':'', isToday?'is-today':''].filter(Boolean).join(' ');
+    const lunarLabel = lunar.day === 1
+      ? `<div class="lunar new-month">旧暦 ${lunar.month}月${lunar.day}日</div>`
+      : `<div class="lunar">旧暦${lunar.month}月${lunar.day}日</div>`;
+    container.insertAdjacentHTML('beforeend', `
+      <div class="${cls}">
+        <div class="day-header">
+          <div class="day-num">${day}</div>
+          ${moon ? `<div class="moon-inline">${moon}</div>` : ''}
+          ${isToday ? '<span class="today-badge">今日</span>' : ''}
+        </div>
+        ${lunarLabel}
+        ${holiday ? `<div class="holiday-name">${holiday}</div>` : ''}
+        ${sekki   ? `<div class="sekki">${sekki}</div>` : ''}
+        <div class="rokuyou ${ry.cls}">${ry.name}</div>
+      </div>`);
+  }
+</script>
+</body>
+</html>
