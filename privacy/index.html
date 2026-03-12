@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お客様の情報について — FUJIYAMA WEBDESIGN SERVICE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@300;400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --blue: #1a4f8a;
+        --blue-dark: #0e2d52;
+        --white: #f0eeea;
+        --logo-green: #d4e89a;
+        --logo-brown: #5c3a1e;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--blue);
+        color: var(--white);
+        font-family: 'Noto Serif JP', serif;
+        font-weight: 300;
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        opacity: 0.5;
+      }
+
+      /* ── TOPBAR ── */
+      .topbar {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid rgba(240, 238, 234, 0.14);
+      }
+
+      .topbar-logo {
+        font-family: 'Space Mono', monospace;
+        font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+        letter-spacing: 0.15em;
+        color: rgba(240, 238, 234, 0.6);
+        text-decoration: none;
+      }
+
+      .topbar-logo:hover {
+        color: rgba(212, 232, 154, 0.8);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        color: rgba(240, 238, 234, 0.5);
+        text-decoration: none;
+        transition: color 0.25s;
+      }
+
+      .back-link:hover {
+        color: rgba(212, 232, 154, 0.8);
+      }
+
+      .back-link::before {
+        content: '←';
+      }
+
+      /* ── HERO ── */
+      .page-hero {
+        padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem) clamp(2rem, 5vw, 3rem);
+        max-width: 1100px;
+        margin: 0 auto;
+        border-bottom: 1px solid rgba(240, 238, 234, 0.1);
+      }
+
+      .page-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        color: rgba(240, 238, 234, 0.45);
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+      }
+
+      .page-label::before {
+        content: '—';
+        color: rgba(240, 238, 234, 0.35);
+      }
+
+      .page-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        line-height: 1.05;
+        color: var(--white);
+        margin-bottom: 1.2rem;
+      }
+
+      .page-title em {
+        font-style: italic;
+        color: rgba(212, 232, 154, 0.9);
+      }
+
+      .page-lead {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        line-height: 1.9;
+        color: rgba(240, 238, 234, 0.7);
+        font-style: italic;
+      }
+
+      /* ── MAIN ── */
+      main {
+        background: var(--blue);
+        position: relative;
+      }
+
+      .section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hr-white {
+        border: none;
+        border-top: 1px solid rgba(240, 238, 234, 0.18);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .section-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        color: rgba(240, 238, 234, 0.45);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+      }
+
+      .section-label::before {
+        content: '—';
+        color: rgba(240, 238, 234, 0.35);
+      }
+
+      .section-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: clamp(1.4rem, 3vw, 2.2rem);
+        line-height: 1.2;
+        color: var(--white);
+        margin-bottom: 1.8rem;
+      }
+
+      .body-text {
+        font-size: clamp(0.88rem, 1.8vw, 1rem);
+        line-height: 2.1;
+        color: rgba(240, 238, 234, 0.82);
+      }
+
+      .body-text + .body-text {
+        margin-top: 1.4rem;
+      }
+
+      /* ── TABLE ── */
+      .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.8rem;
+        font-size: 0.85rem;
+      }
+
+      .info-table th {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        color: rgba(212, 232, 154, 0.7);
+        text-transform: uppercase;
+        text-align: left;
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid rgba(240, 238, 234, 0.2);
+        font-weight: 400;
+      }
+
+      .info-table td {
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid rgba(240, 238, 234, 0.08);
+        color: rgba(240, 238, 234, 0.75);
+        line-height: 1.8;
+        vertical-align: top;
+      }
+
+      .info-table td:first-child {
+        color: var(--white);
+        white-space: nowrap;
+        padding-right: 2rem;
+        font-size: 0.82rem;
+      }
+
+      /* ── LIST ── */
+      .privacy-list {
+        list-style: none;
+        margin-top: 1.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .privacy-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+        line-height: 1.9;
+        color: rgba(240, 238, 234, 0.78);
+      }
+
+      .privacy-list li::before {
+        content: '›';
+        color: rgba(212, 232, 154, 0.65);
+        font-family: 'Space Mono', monospace;
+        flex-shrink: 0;
+      }
+
+      /* ── NOTE BLOCK ── */
+      .note-block {
+        margin-top: 1.8rem;
+        padding: 1.4rem 1.8rem;
+        border-left: 3px solid rgba(212, 232, 154, 0.4);
+        background: rgba(212, 232, 154, 0.04);
+        font-size: 0.82rem;
+        line-height: 2;
+        color: rgba(240, 238, 234, 0.65);
+      }
+
+      /* ── CTA ── */
+      .cta-block {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 2rem;
+        padding: 3rem;
+        border: 1px solid rgba(240, 238, 234, 0.18);
+        background: rgba(255, 255, 255, 0.04);
+        position: relative;
+        overflow: hidden;
+      }
+
+      @media (max-width: 600px) {
+        .cta-block {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .cta-block::before {
+        content: '';
+        position: absolute;
+        right: -100px;
+        top: -100px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(212, 232, 154, 0.06), transparent 70%);
+      }
+
+      .cta-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        color: rgba(240, 238, 234, 0.45);
+        margin-bottom: 0.75rem;
+      }
+
+      .cta-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.4rem, 4vw, 2.3rem);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--white);
+      }
+
+      .cta-btn {
+        display: inline-block;
+        padding: 1em 2.2em;
+        border: 1px solid rgba(240, 238, 234, 0.55);
+        color: var(--white);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.3s, color 0.3s;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-btn:hover {
+        background: var(--white);
+        color: var(--blue-dark);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        padding: 2rem clamp(1.5rem, 5vw, 4rem);
+        border-top: 1px solid rgba(240, 238, 234, 0.14);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+      }
+
+      .footer-copy {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.58rem;
+        color: rgba(240, 238, 234, 0.35);
+        letter-spacing: 0.1em;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .page-hero {
+        animation: fadeIn 0.6s ease both;
+      }
+    </style>
+  </head>
+  <body id="top">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <a href="../index.html" class="topbar-logo">FUJIYAMA WEBDESIGN SERVICE</a>
+      <a href="../index.html" class="back-link">トップに戻る</a>
+    </header>
+
+    <!-- HERO -->
+    <div class="page-hero">
+      <p class="page-label">Privacy</p>
+      <h1 class="page-title">お客様の情報について</h1>
+      <p class="page-lead">「大事な情報を外部と共有するのは不安…」<br>そのお気持ちはよくわかります。</p>
+    </div>
+
+    <!-- MAIN -->
+    <main>
+
+      <hr class="hr-white">
+      <section class="section">
+        <p class="section-label">Overview</p>
+        <h2 class="section-title">はじめに</h2>
+        <p class="body-text">ご相談・ご依頼をいただく際に、どのような情報をお預かりするか、またその情報をどのように取り扱うかについて、事前にご説明します。作業を進めるうえで必要以上の情報をお預かりすることはありませんし、情報の取り扱いについても事前にしっかりご説明します。安心してご相談ください。</p>
+      </section>
+
+      <hr class="hr-white">
+      <section class="section">
+        <p class="section-label">Scope</p>
+        <h2 class="section-title">お預かりする情報の範囲</h2>
+        <p class="body-text">作業に必要な情報のみをお預かりします。必要以上の情報をお聞きすることはありません。</p>
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th>作業内容</th>
+              <th>お預かりする情報の例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Webサイト制作</td>
+              <td>サイトのテーマ、掲載内容、画像素材など</td>
+            </tr>
+            <tr>
+              <td>資料・文書作成のAIサポート</td>
+              <td>作成したい資料の概要、目的、構成案など</td>
+            </tr>
+            <tr>
+              <td>業務自動化のサポート</td>
+              <td>作業の流れ、使用ツール名（ソフト・アプリなど）</td>
+            </tr>
+            <tr>
+              <td>一般的なご相談</td>
+              <td>課題や困っていることの概要のみ</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note-block">
+          個人情報（氏名・住所・電話番号など）や、社外秘・機密にあたる書類の原本をお預かりすることは原則ありません。必要が生じる場合は、事前にご説明し、ご同意をいただいてから進めます。
+        </div>
+      </section>
+
+      <hr class="hr-white">
+      <section class="section">
+        <p class="section-label">AI Tools</p>
+        <h2 class="section-title">AIツールへの情報入力について</h2>
+        <p class="body-text">業務改善やAIサポートの作業では、Claude AI などのAIツールを使用することがあります。その際、以下の点に注意して作業します。</p>
+        <ul class="privacy-list">
+          <li>個人が特定できる情報は入力しません（氏名・住所・連絡先など）</li>
+          <li>社外秘・機密情報にあたる内容は入力しません</li>
+          <li>必要な場合は情報を抽象化・匿名化してから使用します</li>
+          <li>どのAIツールを使うかは事前にご説明します</li>
+        </ul>
+      </section>
+
+      <hr class="hr-white">
+      <section class="section">
+        <p class="section-label">Storage</p>
+        <h2 class="section-title">情報の保管・共有について</h2>
+        <ul class="privacy-list">
+          <li>お預かりした情報は、ご依頼の作業にのみ使用します</li>
+          <li>第三者への提供・販売は一切行いません</li>
+          <li>作業完了後、不要になったデータはお客様のご希望に応じて削除します</li>
+          <li>クラウドストレージを使用する場合は、事前にご説明します</li>
+        </ul>
+      </section>
+
+      <hr class="hr-white">
+      <section class="section">
+        <div class="cta-block">
+          <div>
+            <p class="cta-label">Contact</p>
+            <p class="cta-title">「こんなこともできる？」<br>お気軽にご連絡ください。</p>
+          </div>
+          <a href="../contact/index.html" class="cta-btn">Contact →</a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-copy">© FUJIYAMA WEBDESIGN SERVICE</span>
+    </footer>
+
+    <script>
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.section').forEach(el => obs.observe(el));
+    </script>
+  </body>
+</html>

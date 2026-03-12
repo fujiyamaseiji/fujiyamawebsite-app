@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — FUJIYAMA WEBDESIGN SERVICE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@300;400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --blue: #1a4f8a;
+        --blue-dark: #0e2d52;
+        --white: #f0eeea;
+        --logo-green: #d4e89a;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        background: var(--blue);
+        color: var(--white);
+        font-family: 'Noto Serif JP', serif;
+        font-weight: 300;
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        opacity: 0.5;
+      }
+
+      /* ── TOPBAR ── */
+      .topbar {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid rgba(240, 238, 234, 0.14);
+      }
+
+      .topbar-logo {
+        font-family: 'Space Mono', monospace;
+        font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+        letter-spacing: 0.15em;
+        color: rgba(240, 238, 234, 0.6);
+        text-decoration: none;
+        transition: color 0.25s;
+      }
+
+      .topbar-logo:hover { color: rgba(212, 232, 154, 0.8); }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        color: rgba(240, 238, 234, 0.5);
+        text-decoration: none;
+        transition: color 0.25s;
+      }
+
+      .back-link::before { content: '←'; }
+      .back-link:hover { color: rgba(212, 232, 154, 0.8); }
+
+      /* ── HERO ── */
+      .page-hero {
+        padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem) clamp(2rem, 5vw, 3rem);
+        max-width: 1100px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease both;
+      }
+
+      .page-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        color: rgba(240, 238, 234, 0.45);
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+      }
+
+      .page-label::before {
+        content: '—';
+        color: rgba(240, 238, 234, 0.35);
+      }
+
+      .page-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        line-height: 1.05;
+        color: var(--white);
+        margin-bottom: 1.2rem;
+      }
+
+      .page-title em {
+        font-style: italic;
+        color: rgba(212, 232, 154, 0.9);
+      }
+
+      .page-lead {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        line-height: 1.9;
+        color: rgba(240, 238, 234, 0.7);
+        font-style: italic;
+      }
+
+      /* ── MAIN ── */
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 10vw, 8rem);
+      }
+
+      .hr-white {
+        border: none;
+        border-top: 1px solid rgba(240, 238, 234, 0.18);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* ── FORM ── */
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 680px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .form-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.25em;
+        color: rgba(240, 238, 234, 0.5);
+        text-transform: uppercase;
+      }
+
+      .form-label span {
+        color: rgba(212, 232, 154, 0.7);
+        margin-left: 0.3em;
+      }
+
+      .form-input,
+      .form-textarea {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(240, 238, 234, 0.18);
+        color: var(--white);
+        font-family: 'Noto Serif JP', serif;
+        font-size: 0.95rem;
+        font-weight: 300;
+        padding: 0.9rem 1.1rem;
+        outline: none;
+        transition: border-color 0.25s, background 0.25s;
+        width: 100%;
+        border-radius: 0;
+        -webkit-appearance: none;
+      }
+
+      .form-input::placeholder,
+      .form-textarea::placeholder {
+        color: rgba(240, 238, 234, 0.25);
+      }
+
+      .form-input:focus,
+      .form-textarea:focus {
+        border-color: rgba(212, 232, 154, 0.45);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 180px;
+        line-height: 1.9;
+      }
+
+      .form-submit {
+        display: inline-block;
+        padding: 1em 2.8em;
+        border: 1px solid rgba(240, 238, 234, 0.55);
+        background: transparent;
+        color: var(--white);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+        align-self: flex-start;
+      }
+
+      .form-submit:hover {
+        background: var(--white);
+        color: var(--blue-dark);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        padding: 2rem clamp(1.5rem, 5vw, 4rem);
+        border-top: 1px solid rgba(240, 238, 234, 0.14);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+      }
+
+      .footer-copy {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.58rem;
+        color: rgba(240, 238, 234, 0.35);
+        letter-spacing: 0.1em;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <a href="../index.html" class="topbar-logo">FUJIYAMA WEBDESIGN SERVICE</a>
+      <a href="../index.html" class="back-link">トップに戻る</a>
+    </header>
+
+    <!-- HERO -->
+    <div class="page-hero">
+      <p class="page-label">Contact</p>
+      <h1 class="page-title">お問い合わせ</h1>
+      <p class="page-lead">「こんなことできる？」など、お気軽にご連絡ください。</p>
+    </div>
+
+    <hr class="hr-white">
+
+    <!-- MAIN -->
+    <main>
+      <form
+        class="contact-form"
+        action="https://formspree.io/f/mreykgpl"
+        method="POST"
+      >
+        <div class="form-group">
+          <label class="form-label" for="name">お名前<span>*</span></label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="山田 太郎" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">メールアドレス<span>*</span></label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subject">件名</label>
+          <input class="form-input" type="text" id="subject" name="subject" placeholder="Webサイト制作について">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">お問い合わせ内容<span>*</span></label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="ご相談内容をご記入ください。" required></textarea>
+        </div>
+
+        <button class="form-submit" type="submit">送信する →</button>
+      </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-copy">© FUJIYAMA WEBDESIGN SERVICE</span>
+    </footer>
+
+  </body>
+</html>

@@ -290,7 +290,6 @@
         font-size: clamp(0.88rem, 1.8vw, 1rem);
         line-height: 2.1;
         color: rgba(240, 238, 234, 0.82);
-        max-width: 680px;
       }
 
       .intro-text strong {
@@ -311,7 +310,6 @@
         border-left: 3px solid rgba(212, 232, 154, 0.4);
         padding: 2rem 2.5rem;
         background: rgba(212, 232, 154, 0.04);
-        max-width: 800px;
       }
 
       .tagline-text {
@@ -378,6 +376,51 @@
         font-size: 0.8rem;
         line-height: 1.9;
         color: rgba(240, 238, 234, 0.62);
+      }
+
+      .privacy-note-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1.8rem;
+        padding: 0.9rem 1.4rem;
+        border: 1px solid rgba(240, 238, 234, 0.15);
+        background: rgba(255, 255, 255, 0.03);
+        text-decoration: none;
+        transition: border-color 0.25s, background 0.25s;
+      }
+
+      .privacy-note-link:hover {
+        border-color: rgba(212, 232, 154, 0.35);
+        background: rgba(212, 232, 154, 0.05);
+      }
+
+      .privacy-note-icon {
+        font-size: 0.9rem;
+      }
+
+      .privacy-note-text {
+        font-family: 'Noto Serif JP', serif;
+        font-size: 0.8rem;
+        color: rgba(240, 238, 234, 0.6);
+        transition: color 0.25s;
+      }
+
+      .privacy-note-link:hover .privacy-note-text {
+        color: rgba(212, 232, 154, 0.8);
+      }
+
+      .privacy-note-arrow {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.62rem;
+        color: rgba(240, 238, 234, 0.3);
+        transition: color 0.25s, transform 0.25s;
+        display: inline-block;
+      }
+
+      .privacy-note-link:hover .privacy-note-arrow {
+        color: rgba(212, 232, 154, 0.7);
+        transform: translateX(4px);
       }
 
       .card-tag {
@@ -816,8 +859,10 @@
       <section class="section">
         <p class="section-label">About</p>
         <h2 class="section-title">FUJIYAMA WEBDESIGN SERVICE</h2>
-        <p class="intro-text"> Webサイト制作・フロントエンド開発・UI/UX改善を中心に、制作から運用・機能改修まで幅広く対応しております。ECサイト・ファッション系・会員管理画面・キャンペーンページなど、多様な現場での実装経験をもとに、ユーザー視点と保守性を意識した提案・実装を行ってきました。<br><br>
-          <strong><a href="https://aiclaude.jp/" target="_blank">Claude AI</a></strong> を実務に取り入れることで、制作スピード・品質・提案力をさらに高めた次世代のWeb制作サービスをご提供します。 また、事業の業務改善にAIを使用して全自動化をサポートできます。<br /> 例えばこんなこともできる？などございましたらご連絡ください。
+        <p class="intro-text">Webサイト制作・フロントエンド開発・UI/UX改善を中心に、制作から運用・機能改修まで幅広く対応しております。ECサイト・ファッション系・会員管理画面・キャンペーンページなど、多様な現場での実装経験をもとに、ユーザー視点と保守性を意識した提案・実装を行ってきました。<strong><a href="https://aiclaude.jp/" target="_blank">Claude AI</a></strong> を実務に取り入れることで、制作スピード・品質・提案力をさらに高めた次世代のWeb制作サービスをご提供します。<br><br>
+          また、Web制作だけでなく、事業の業務改善にもAIを活用したサポートが可能です。書類作成、データ整理、資料づくり——これまで時間と手間がかかっていた業務を、AIがシンプルにしてくれる時代になりました。特別なスキルは必要ありません。会社の規模は関係ありません。同じAIを、誰でも使うことができます。<br><br>
+          「大事な情報を外部と共有するのは不安…」そのお気持ちはよくわかります。作業を進めるうえで必要以上の情報をお預かりすることはありませんし、情報の取り扱いについても事前にしっかりご説明します。安心してご相談ください。<br><br>
+          「自分には難しそう…」「こんなこともできる？」そんな疑問やご不安もお気軽にご連絡ください。使い方がわからない、何から始めればいいかわからない、そういった不安にも丁寧にお応えします。
         </p>
       </section>
       <hr class="hr-white">
@@ -866,6 +911,11 @@
             <p class="card-desc">要件定義書・改修仕様書・作業報告書などをAIで効率化し、クライアント様の確認・承認プロセスをスムーズにします。</p><span class="card-tag">DOCS</span>
           </div>
         </div>
+        <a href="./privacy/index.html" class="privacy-note-link">
+          <span class="privacy-note-icon">🔒</span>
+          <span class="privacy-note-text">お客様の情報の取り扱いについて</span>
+          <span class="privacy-note-arrow">→</span>
+        </a>
       </section>
       <hr class="hr-white">
       <section class="section">
@@ -890,6 +940,16 @@
             <div class="skill-item">仕様書・ドキュメント自動化</div>
             <div class="skill-item">運用フロー改善・自動化提案</div>
           </div>
+        </div>
+      </section>
+      <hr class="hr-white">
+      <section class="section">
+        <div class="cta-block">
+          <div>
+            <p class="cta-label">Contact</p>
+            <p class="cta-title">「こんなことできる？」<br>お気軽にご連絡ください。</p>
+          </div>
+          <a href="./contact/index.html" class="cta-btn">Contact →</a>
         </div>
       </section>
     </main>
