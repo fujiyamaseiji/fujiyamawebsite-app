@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>業務改善の具体例 | FUJIYAMA WEBDESIGN SERVICE</title>
+  <meta name="description" content="Excelへの転記、予約・問い合わせ管理、申請フォームや管理画面の改善例をご紹介します。">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f1f5f9;
+      color: #14253b;
+      font: 1rem/1.8 system-ui, sans-serif;
+    }
+    .wrap { width: min(100% - 2rem, 58rem); margin-inline: auto; }
+    header, footer { background: #153e68; color: #fff; padding-block: 1.25rem; }
+    header a, footer a { color: inherit; }
+    header a { font-weight: 700; }
+    main { padding-block: 2.5rem 4rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.25; margin: 0; }
+    h2 { line-height: 1.4; margin-block-start: 0; }
+    h3 { margin-block-end: .3rem; }
+    p, li { overflow-wrap: anywhere; }
+    a { color: #144c81; text-underline-offset: .2em; }
+    a:focus-visible { outline: 3px solid #a65a00; outline-offset: 4px; }
+    nav ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+      gap: .75rem;
+      list-style: none;
+      padding: 0;
+    }
+    nav a {
+      display: block;
+      height: 100%;
+      padding: .85rem 1rem;
+      border: 1px solid #c1d4e7;
+      border-radius: .6rem;
+      background: #fff;
+      font-weight: 700;
+    }
+    nav a:hover { background: #e6eff8; }
+    section {
+      scroll-margin-top: 1rem;
+      background: #fff;
+      border: 1px solid #c1d4e7;
+      border-radius: .8rem;
+      padding: clamp(1rem, 4vw, 2rem);
+      margin-block: 1.25rem;
+    }
+    section:target { border-color: #24659e; }
+    ol { padding-inline-start: 1.5rem; }
+    ol li + li { margin-block-start: .55rem; }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; min-width: 28rem; }
+    caption { text-align: left; font-weight: 700; margin-bottom: .3rem; }
+    th, td { padding: .5rem .65rem; text-align: left; border: 1px solid #d4e0ec; }
+    th { background: #eaf2fa; }
+    .contact {
+      display: inline-block;
+      background: #153e68;
+      color: #fff;
+      padding: .65rem 1rem;
+      border-radius: .5rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><a href="./index.html">FUJIYAMA WEBDESIGN SERVICE</a></div></header>
+  <main class="wrap">
+    <h1>業務改善の具体例</h1>
+    <p>日々の転記や確認にかかる手間を、今お使いのツールやWebシステムに合わせて減らします。</p>
+    <nav aria-label="困りごとから探す">
+      <ul>
+        <li><a href="#data-entry">同じ内容を何度も入力している</a></li>
+        <li><a href="#booking-inquiries">予約や問い合わせの管理に手間がかかる</a></li>
+        <li><a href="#form-improvements">申請フォームや管理画面が使いづらい</a></li>
+      </ul>
+    </nav>
+
+    <section id="data-entry">
+      <h2>同じ内容を何度も入力している</h2>
+      <p>申込フォームに入った氏名や連絡先をExcel台帳に自動で追加し、スタッフが転記する手間を減らします。</p>
+      <h3>作業の流れ</h3>
+      <ol>
+        <li>普段の転記を1件見せていただき、申込の受け取り方と台帳の保存先を確認します。内容の確認が必要なら、担当者が確認してから登録する流れにします。</li>
+        <li>フォームの項目を台帳のどの列に入れるか決めます。</li>
+        <li>たとえばMicrosoft FormsとOneDrive for BusinessやSharePoint上のExcelをお使いなら、Power Automateで回答を取得し、台帳に1行追加する仕組みを作れます。台帳が担当者のPCにだけある場合は、現在の保存先で連携できるか、共有先へ移せるかを確認します。</li>
+        <li>架空の申込で、正しい列に入るか、任意項目が空欄でも登録できるか、やり直しても二重登録されないかを確認します。登録に失敗したときの確認先と復旧手順もお伝えします。</li>
+      </ol>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="フォームとExcel台帳の対応例">
+        <table>
+          <caption>フォームとExcel台帳の対応例</caption>
+          <thead><tr><th scope="col">申込フォーム</th><th scope="col">Excel台帳</th><th scope="col">登録ルール</th></tr></thead>
+          <tbody>
+            <tr><td>送信日時</td><td>受付日</td><td>台帳の日付形式に合わせる</td></tr>
+            <tr><td>お名前</td><td>氏名</td><td>入力された内容を入れる</td></tr>
+            <tr><td>電話番号</td><td>電話番号</td><td>先頭の0が消えないよう文字列で登録する</td></tr>
+            <tr><td>メールアドレス</td><td>メール</td><td>任意項目で未入力なら空欄にする</td></tr>
+            <tr><td>—</td><td>対応状況</td><td>新規登録時は「未対応」にする</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>AIは項目対応表やテスト項目のたたき台づくりに活用できます。氏名や連絡先は、決めたルールに沿って自動転記します。</p>
+      <h3>お客様にお願いすることと費用</h3>
+      <ul>
+        <li><strong>導入前</strong>に、普段の転記作業を1件見せていただき、フォームの項目と台帳の列の対応を一緒に確認します。</li>
+        <li><strong>設定時</strong>には、必要に応じてフォームや台帳へのアクセス権限の付与をお願いします。台帳を担当者のPCに保存している場合は、共有先への移行をご相談することがあります。</li>
+        <li><strong>運用開始前</strong>に、架空の申込で、台帳に登録された内容が普段の業務で使えるかをご確認いただきます。</li>
+        <li><strong>導入後</strong>は、登録に失敗した場合に担当者にご確認いただきます。登録前に承認を挟む場合は、その確認もお願いします。</li>
+      </ul>
+      <p>費用は、設定やテストなどの導入作業の範囲に応じてお見積もりします。現在の契約や連携方法によっては、追加のライセンス費用がかかる場合があります。</p>
+    </section>
+
+    <section id="booking-inquiries">
+      <h2>予約や問い合わせの管理に手間がかかる</h2>
+      <p><strong>予約管理</strong>では、日時・お名前・人数・予約状況を共有の一覧で確認できるようにします。連携できるWeb予約は自動で取り込み、電話予約はスタッフが入力します。変更やキャンセルも同じ画面で管理できます。</p>
+      <p><strong>問い合わせ管理</strong>では、受付日・内容・担当者・対応状況を一か所にまとめ、誰が対応中か、何が未対応かを確認できるようにします。</p>
+      <h3>問い合わせ管理の作業の流れ</h3>
+      <ol>
+        <li>メール・Webフォーム・電話での受付から返信まで、現在の流れを確認します。</li>
+        <li>一覧に載せる項目と、対応状況を「未対応」「対応中」「完了」に切り替えるタイミングを決めます。</li>
+        <li>Webフォームから届いた内容は連携できれば自動登録し、電話で受けた内容は入力画面から登録できるようにします。今ある共有ツールで作れる範囲を確認し、必要に応じて専用のWeb画面を作ります。</li>
+        <li>架空の問い合わせで受付、引き継ぎ、返信後の完了まで試し、登録に失敗したときの確認方法もお伝えします。</li>
+      </ol>
+      <p>営業時間やアクセスなどのよくある質問には、用意いただいた案内文をもとにAIで返信の下書きを作り、スタッフが確認して送る仕組みも検討できます。</p>
+      <h3>お客様にお願いすることと費用</h3>
+      <ul>
+        <li><strong>導入前</strong>に、現在の受付方法と、予約の変更・キャンセルや問い合わせの引き継ぎの流れを教えていただきます。一覧に載せる項目や担当者の決め方も一緒に確認します。</li>
+        <li><strong>設定時</strong>には、必要に応じて予約サービスや問い合わせフォーム、共有ツールへのアクセス権限の付与をお願いします。</li>
+        <li><strong>運用開始前</strong>に、担当者に架空の予約や問い合わせで、受付から変更・引き継ぎ・対応完了までの操作をお試しいただきます。</li>
+        <li><strong>導入後</strong>は、電話で受け付けた内容の入力や、問い合わせの対応状況の更新を担当者にお願いします。AIで返信の下書きを作る場合は、送信前に内容をご確認いただきます。</li>
+      </ul>
+      <p>費用は、既存ツールの設定や連携、専用画面の作成など、必要な作業の範囲に応じてお見積もりします。利用するサービスや現在の契約によっては、追加の利用料やライセンス費用がかかる場合があります。</p>
+    </section>
+
+    <section id="form-improvements">
+      <h2>申請フォームや管理画面が使いづらい</h2>
+      <p><strong>申請フォーム</strong>は、「新規・変更・取消」に応じて必要な欄だけを表示します。たとえば「取消」なら申請番号と取消理由を表示し、入力漏れは該当欄の近くで案内します。</p>
+      <p><strong>管理画面</strong>は、受付日・担当者・対応状況を一覧に表示し、未対応だけの絞り込みや申請番号による検索を追加します。</p>
+      <h3>作業の流れ</h3>
+      <ol>
+        <li>現在のシステムを確認し、設定で変更できる範囲とコードの改修が必要な範囲を調べます。</li>
+        <li>変更後の画面案を見ながら、申請ごとの必須項目や管理画面で最初に確認したい情報を決めます。</li>
+        <li>テスト環境で入力欄の切り替えや一覧の検索を実装します。自社のWebシステムを改修する場合は、申請の種類に応じてサーバー側でも必須項目を確認します。</li>
+        <li>表示されなくなった欄の値が送られないか、過去の申請も開けるかを確認します。担当者にも操作を試していただいてから本番へ反映します。</li>
+      </ol>
+      <p>AIは変更後の画面の試作や、入力パターンごとのテスト項目の洗い出しに活用できます。</p>
+      <h3>お客様にお願いすることと費用</h3>
+      <ul>
+        <li><strong>改修前</strong>に、入力や確認で困っている箇所を教えていただきます。申請の種類ごとに必要な入力項目と、管理画面で確認したい情報を一緒に整理します。</li>
+        <li><strong>設定・改修時</strong>には、必要に応じて現在のシステムの設定画面やテスト環境へのアクセス権限の付与をお願いします。</li>
+        <li><strong>公開前</strong>に、担当者にテスト環境で新規・変更・取消の申請や、管理画面での検索・絞り込みをお試しいただきます。</li>
+        <li><strong>公開後</strong>は、必要に応じて社内の手順書や利用者向けの案内を更新していただきます。</li>
+      </ul>
+      <p>費用は、フォームの設定変更や管理画面の改修など、必要な作業の範囲に応じてお見積もりします。現在の契約や必要な機能によっては、プラン変更や追加機能の利用料がかかる場合があります。</p>
+    </section>
+
+    <a class="contact" href="./contact/index.html">業務改善について相談する</a>
+  </main>
+  <footer><div class="wrap"><a href="./index.html">トップページに戻る</a></div></footer>
+</body>
+</html>
